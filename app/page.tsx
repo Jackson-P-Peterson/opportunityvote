@@ -37,7 +37,7 @@ export default function Home() {
                 <span className="absolute inset-0 bg-gradient-to-r from-foreground/90 to-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </Link>
               <Link
-                href="mailto:jpp@prestonpublicaffairs.com"
+                href="mailto:contact@opportunity.vote"
                 className="group inline-flex items-center justify-center px-10 py-4 text-sm font-light tracking-wide bg-transparent text-foreground border border-border/60 rounded-full hover:border-foreground/40 hover:bg-foreground/5 active:scale-95 transition-all duration-300 ease-out min-w-[160px] backdrop-blur-sm"
               >
                 Contact
@@ -81,10 +81,10 @@ export default function Home() {
                 <p className="text-sm font-light text-muted-foreground/80 leading-relaxed">
                   For inquiries, please reach out to us at{" "}
                   <a
-                    href="mailto:jpp@prestonpublicaffairs.com"
+                    href="mailto:contact@opportunity.vote"
                     className="underline underline-offset-4 decoration-foreground/30 hover:decoration-foreground/60 transition-all duration-300"
                   >
-                    jpp@prestonpublicaffairs.com
+                    contact@opportunity.vote
                   </a>
                 </p>
               </div>
@@ -104,10 +104,10 @@ export default function Home() {
               Not authorized by any candidate or candidate&apos;s committee.
             </p>
             <a
-              href="mailto:jpp@prestonpublicaffairs.com"
+              href="mailto:contact@opportunity.vote"
               className="text-xs font-light tracking-wide text-muted-foreground/70 underline underline-offset-4 decoration-muted-foreground/30 hover:decoration-foreground/60 hover:text-foreground/80 transition-all duration-300"
             >
-              jpp@prestonpublicaffairs.com
+              contact@opportunity.vote
             </a>
           </div>
         </div>

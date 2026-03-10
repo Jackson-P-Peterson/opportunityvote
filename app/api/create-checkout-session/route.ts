@@ -5,12 +5,37 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: NextRequest) {
   try {
-    const { amount } = await req.json()
+    const { amount, donorInfo } = await req.json()
 
     const amountCents = Math.round(Number(amount) * 100)
     if (!amountCents || amountCents < 100) {
       return NextResponse.json(
         { error: "Amount must be at least $1.00" },
+        { status: 400 }
+      )
+    }
+
+    // Validate donor information
+    if (!donorInfo) {
+      return NextResponse.json(
+        { error: "Donor information is required" },
+        { status: 400 }
+      )
+    }
+
+    const {
+      fullName,
+      streetAddress,
+      city,
+      state,
+      zip,
+      occupation,
+      employer,
+    } = donorInfo
+
+    if (!fullName || !streetAddress || !city || !state || !zip || !occupation || !employer) {
+      return NextResponse.json(
+        { error: "All donor information fields are required" },
         { status: 400 }
       )
     }
@@ -38,6 +63,17 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: "payment",
+      customer_email: undefined, // We'll collect email in Stripe Checkout
+      billing_address_collection: "required",
+      metadata: {
+        donor_full_name: fullName,
+        donor_street_address: streetAddress,
+        donor_city: city,
+        donor_state: state,
+        donor_zip: zip,
+        donor_occupation: occupation,
+        donor_employer: employer,
+      },
       success_url: `${origin}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/donate`,
     })
