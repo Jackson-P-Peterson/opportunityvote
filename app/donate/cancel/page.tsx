@@ -1,0 +1,51 @@
+import Link from "next/link"
+
+export default function DonateCancelPage() {
+  return (
+    <div className="min-h-screen flex flex-col bg-background antialiased">
+      <header className="border-b border-border/40 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-8 py-8">
+          <Link
+            href="/"
+            className="text-base font-light tracking-[0.05em] text-foreground/90 hover:text-foreground transition-colors"
+          >
+            Americans for Opportunity
+          </Link>
+        </div>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center py-16 md:py-24 px-8">
+        <div className="max-w-md text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <h1 className="text-3xl md:text-4xl font-light tracking-[-0.02em] text-foreground mb-4">
+            Donation cancelled
+          </h1>
+          <p className="text-muted-foreground/80 font-light mb-8">
+            Your donation was not completed. You can try again whenever you&apos;re ready.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/donate"
+              className="inline-flex items-center justify-center px-10 py-4 text-sm font-light tracking-wide bg-foreground text-background rounded-full hover:scale-105 active:scale-100 transition-all duration-300 ease-out shadow-lg hover:shadow-xl"
+            >
+              Try again
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center px-10 py-4 text-sm font-light tracking-wide bg-transparent text-foreground border border-border/60 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-300 ease-out"
+            >
+              Return home
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      <footer className="border-t border-border/40 py-8 bg-background">
+        <div className="max-w-6xl mx-auto px-8 text-center">
+          <p className="text-xs font-light tracking-wide text-muted-foreground/70">
+            Paid for by Americans for Opportunity.
+          </p>
+        </div>
+      </footer>
+    </div>
+  )
+}
