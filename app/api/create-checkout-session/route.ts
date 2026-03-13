@@ -16,12 +16,17 @@ export async function POST(req: NextRequest) {
     const { amount, donorInfo, entity } = await req.json()
 
     const isAction = entity === "action"
-    const orgName = isAction
-      ? "Americans for Opportunity Action"
-      : "Americans for Opportunity"
-    const orgDescription = isAction
-      ? "Contributions to Americans for Opportunity Action are not tax deductible."
-      : "Contributions to Americans for Opportunity are not tax deductible."
+    const isFoundation = entity === "foundation"
+    const orgName = isFoundation
+      ? "Americans for Opportunity Foundation"
+      : isAction
+        ? "Americans for Opportunity Action"
+        : "Americans for Opportunity"
+    const orgDescription = isFoundation
+      ? "Contributions to Americans for Opportunity Foundation may be tax deductible."
+      : isAction
+        ? "Contributions to Americans for Opportunity Action are not tax deductible."
+        : "Contributions to Americans for Opportunity are not tax deductible."
 
     const amountCents = Math.round(Number(amount) * 100)
     if (!amountCents || amountCents < 100) {
@@ -62,8 +67,16 @@ export async function POST(req: NextRequest) {
       rawOrigin ||
       (referer ? new URL(referer).origin : null) ||
       "http://localhost:3000"
-    const successPath = isAction ? "/action/donate/success" : "/donate/success"
-    const cancelPath = isAction ? "/action/donate" : "/donate"
+    const successPath = isFoundation
+      ? "/foundation/donate/success"
+      : isAction
+        ? "/action/donate/success"
+        : "/donate/success"
+    const cancelPath = isFoundation
+      ? "/foundation/donate"
+      : isAction
+        ? "/action/donate"
+        : "/donate"
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -92,7 +105,7 @@ export async function POST(req: NextRequest) {
         donor_zip: zip,
         donor_occupation: occupation,
         donor_employer: employer,
-        ...(isAction ? { entity: "action" } : {}),
+        ...(isAction ? { entity: "action" } : isFoundation ? { entity: "foundation" } : {}),
       },
       success_url: `${origin}${successPath}?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}${cancelPath}`,
